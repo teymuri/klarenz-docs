@@ -61,7 +61,7 @@ Python 3.10.12
 <p>Klarenz requires LilyPond 2.21.0 or later.
 Make sure LilyPond is installed: http://lilypond.org/development.html
 Make sure LilyPond is callable from the commandline:</p>
-<pre><code>$ lilypond --version
+<pre><code>~$ lilypond --version
 GNU LilyPond 2.22.2
 </code></pre>
 <p>Klarenz is on <a href="https://pypi.org/project/klarenz/">Pypi</a>, so simply use pip to install it:</p>
@@ -71,7 +71,7 @@ GNU LilyPond 2.22.2
 <pre><code>from klarenz import *
 proc(Part({&quot;pchs&quot;: range(60, 72), &quot;onsets&quot;: range(12)}))
 </code></pre>
-<p><img alt="Quick Test Klarenz Music Notation" src="docs/jpg/readme-example.jpg" /></p>
+<p><img alt="Quick Test Klarenz Music Notation" src="jpg/readme-example.jpg" /></p>
 <p>If you want to use two instruments instead of just one, simply pass a list of parts to the processor function proc, rather than just one part:</p>
 <pre><code>proc(
     [
@@ -80,7 +80,7 @@ proc(Part({&quot;pchs&quot;: range(60, 72), &quot;onsets&quot;: range(12)}))
     ]
 )
 </code></pre>
-<p><img alt="Quick Test Klarenz Music Notation" src="docs/jpg/readme-example2.jpg" /></p>
+<p><img alt="Quick Test Klarenz Music Notation" src="jpg/readme-example2.jpg" /></p>
 <p>To have more than one voice in each part, pack multiple pitch and onset collections in a list:</p>
 <pre><code>proc(
     [
@@ -89,7 +89,7 @@ proc(Part({&quot;pchs&quot;: range(60, 72), &quot;onsets&quot;: range(12)}))
     ]
 )
 </code></pre>
-<p><img alt="Quick Test Klarenz Music Notation" src="docs/jpg/readme-example3.jpg" /></p>
+<p><img alt="Quick Test Klarenz Music Notation" src="jpg/readme-example3.jpg" /></p>
 <p>Simple and pythonic!</p>
 <hr />
 <p><small>Klarenz is free software: you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation, either version 3 of the License, or (at your option) any later version.<br>
@@ -177,5 +177,5 @@ See the <a href="http://www.gnu.org/licenses/">GNU General Public License</a> fo
 
 <!--
 MkDocs version : 1.5.3
-Build Date UTC : 2023-11-04 11:11:00.177509+00:00
+Build Date UTC : 2023-11-04 13:41:11.973570+00:00
 -->
