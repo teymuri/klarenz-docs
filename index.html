@@ -48,18 +48,53 @@
     
     <div id="toc-collapse" class="navbar-collapse collapse card bg-secondary">
         <ul class="nav flex-column">
-            
-            <li class="nav-item" data-level="1"><a href="#klarenz" class="nav-link">Klarenz</a>
-              <ul class="nav flex-column">
-              </ul>
-            </li>
         </ul>
     </div>
 </div></div>
                     <div class="col-md-9" role="main">
 
-<h1 id="klarenz">Klarenz</h1>
-<p>Programmatically generate Lilypond scores, with ease and elegance of pure Python </p></div>
+<p><a href="https://en.wikipedia.org/wiki/Clarence_Barlow"><strong>Klarenz</strong></a> is a highly minimalist (the entire API consists of a single class <code>Part</code> and a main processor function <code>proc</code>!) and Pythonic package for compiling Lilypond sheet music.</p>
+<p>Klarenz requires Python 3.5 or later:</p>
+<pre><code>~$ python --version
+Python 3.10.12
+</code></pre>
+<p>Klarenz requires LilyPond 2.21.0 or later.
+Make sure LilyPond is installed: http://lilypond.org/development.html
+Make sure LilyPond is callable from the commandline:</p>
+<pre><code>$ lilypond --version
+GNU LilyPond 2.22.2
+</code></pre>
+<p>Klarenz is on <a href="https://pypi.org/project/klarenz/">Pypi</a>, so simply use pip to install it:</p>
+<pre><code>~$ python -m pip install klarenz
+</code></pre>
+<p>Start Python, import Klarenz and print some notes:</p>
+<pre><code>from klarenz import *
+proc(Part({&quot;pchs&quot;: range(60, 72), &quot;onsets&quot;: range(12)}))
+</code></pre>
+<p><img alt="Quick Test Klarenz Music Notation" src="docs/jpg/readme-example.jpg" /></p>
+<p>If you want to use two instruments instead of just one, simply pass a list of parts to the processor function proc, rather than just one part:</p>
+<pre><code>proc(
+    [
+        Part({&quot;pchs&quot;: range(72, 84), &quot;onsets&quot;: range(12)}),
+        Part({&quot;pchs&quot;: range(67, 79), &quot;onsets&quot;: range(12)})
+    ]
+)
+</code></pre>
+<p><img alt="Quick Test Klarenz Music Notation" src="docs/jpg/readme-example2.jpg" /></p>
+<p>To have more than one voice in each part, pack multiple pitch and onset collections in a list:</p>
+<pre><code>proc(
+    [
+        Part({&quot;pchs&quot;: [range(72, 84), range(65, 77)], &quot;onsets&quot;: [range(12)] * 2}),
+        Part({&quot;pchs&quot;: [range(60, 72), range(67, 79)], &quot;onsets&quot;: [range(12)] * 2})
+    ]
+)
+</code></pre>
+<p><img alt="Quick Test Klarenz Music Notation" src="docs/jpg/readme-example3.jpg" /></p>
+<p>Simple and pythonic!</p>
+<hr />
+<p><small>Klarenz is free software: you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation, either version 3 of the License, or (at your option) any later version.<br>
+This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.<br>
+See the <a href="http://www.gnu.org/licenses/">GNU General Public License</a> for more details.</small></p></div>
             </div>
         </div>
 
@@ -142,5 +177,5 @@
 
 <!--
 MkDocs version : 1.5.3
-Build Date UTC : 2023-11-04 10:58:43.014268+00:00
+Build Date UTC : 2023-11-04 11:11:00.177509+00:00
 -->
