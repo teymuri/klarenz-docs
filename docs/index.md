@@ -1,5 +1,8 @@
+# About
 
 [__Klarenz__](https://en.wikipedia.org/wiki/Clarence_Barlow) is a highly minimalist (the entire API consists of a single class `Part` and a main processor function `proc`!) and Pythonic package for compiling Lilypond sheet music.
+
+# Installation
 
 Klarenz requires Python 3.5 or later:
 
@@ -8,14 +11,14 @@ Klarenz requires Python 3.5 or later:
 Python 3.10.12
 ```
 
-Klarenz requires LilyPond 2.21.0 or later.
-Make sure LilyPond is installed: http://lilypond.org/development.html
-Make sure LilyPond is callable from the commandline:
+Klarenz requires LilyPond for compiling the final sheet music.
+Make sure [Lilypond](http://lilypond.org/download.html) is installed and callable from the commandline:
 
 ```
 ~$ lilypond --version
 GNU LilyPond 2.22.2
 ```
+
 
 Klarenz is on [Pypi](https://pypi.org/project/klarenz/), so simply use pip to install it:
 
@@ -23,8 +26,9 @@ Klarenz is on [Pypi](https://pypi.org/project/klarenz/), so simply use pip to in
 ~$ python -m pip install klarenz
 ```
 
-Start Python, import Klarenz and print some notes:
+# First Example
 
+Start Python, import Klarenz and print some notes:
 
 ```
 from klarenz import *
@@ -55,9 +59,6 @@ proc(
 ![Quick Test Klarenz Music Notation](jpg/readme-example3.jpg)
 
 Simple and pythonic!
-
-
-
 
 - - -
 <small>Klarenz is free software: you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation, either version 3 of the License, or (at your option) any later version.<br>
