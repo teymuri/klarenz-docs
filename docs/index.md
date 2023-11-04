@@ -13,7 +13,7 @@ Make sure LilyPond is installed: http://lilypond.org/development.html
 Make sure LilyPond is callable from the commandline:
 
 ```
-$ lilypond --version
+~$ lilypond --version
 GNU LilyPond 2.22.2
 ```
 
@@ -30,7 +30,7 @@ Start Python, import Klarenz and print some notes:
 from klarenz import *
 proc(Part({"pchs": range(60, 72), "onsets": range(12)}))
 ```
-![Quick Test Klarenz Music Notation](docs/jpg/readme-example.jpg)
+![Quick Test Klarenz Music Notation](jpg/readme-example.jpg)
 
 If you want to use two instruments instead of just one, simply pass a list of parts to the processor function proc, rather than just one part:
 ```
@@ -41,7 +41,7 @@ proc(
     ]
 )
 ```
-![Quick Test Klarenz Music Notation](docs/jpg/readme-example2.jpg)
+![Quick Test Klarenz Music Notation](jpg/readme-example2.jpg)
 
 To have more than one voice in each part, pack multiple pitch and onset collections in a list:
 ```
@@ -52,7 +52,7 @@ proc(
     ]
 )
 ```
-![Quick Test Klarenz Music Notation](docs/jpg/readme-example3.jpg)
+![Quick Test Klarenz Music Notation](jpg/readme-example3.jpg)
 
 Simple and pythonic!
 
