@@ -24,6 +24,8 @@ Klarenz is on [Pypi](https://pypi.org/project/klarenz/), so simply use pip to in
 
 ```
 ~$ python -m pip install klarenz
+~$ python -c "import klarenz; print(klarenz.version)"
+0.0.7
 ```
 
 # First Example
