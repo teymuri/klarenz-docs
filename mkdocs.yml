@@ -1,5 +1,8 @@
 site_name: Klarenz
 nav:
   - About: index.md
-  - Documentation: doc.md
+  - Documentation: 
+    - Class Part: part.md
+    - Metadata Examples: md-examples.md
+    - Function proc: proc.md
   - Contact: contact.md
