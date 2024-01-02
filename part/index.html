@@ -8,7 +8,7 @@
         
         
         <link rel="shortcut icon" href="../img/favicon.ico">
-        <title>Doc - Klarenz</title>
+        <title>Class Part - Klarenz</title>
         <link href="../css/bootstrap.min.css" rel="stylesheet">
         <link href="../css/font-awesome.min.css" rel="stylesheet">
         <link href="../css/base.css" rel="stylesheet">
@@ -33,12 +33,12 @@
                             <li class="navitem">
                                 <a href=".." class="nav-link">About</a>
                             </li>
-                            <li class="dropdown">
+                            <li class="dropdown active">
                                 <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">Documentation <b class="caret"></b></a>
                                 <ul class="dropdown-menu">
                                     
 <li>
-    <a href="../part/" class="dropdown-item">Class Part</a>
+    <a href="./" class="dropdown-item active">Class Part</a>
 </li>
                                     
 <li>
@@ -61,6 +61,16 @@
                                 <i class="fa fa-search"></i> Search
                             </a>
                         </li>
+                            <li class="nav-item">
+                                <a rel="prev" href=".." class="nav-link">
+                                    <i class="fa fa-arrow-left"></i> Previous
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a rel="next" href="../md-examples/" class="nav-link">
+                                    Next <i class="fa fa-arrow-right"></i>
+                                </a>
+                            </li>
                     </ul>
                 </div>
             </div>
@@ -79,24 +89,9 @@
     <div id="toc-collapse" class="navbar-collapse collapse card bg-secondary">
         <ul class="nav flex-column">
             
-            <li class="nav-item" data-level="1"><a href="#part" class="nav-link">Part</a>
+            <li class="nav-item" data-level="1"><a href="#class-part" class="nav-link">Class Part</a>
               <ul class="nav flex-column">
-              </ul>
-            </li>
-            
-            <li class="nav-item" data-level="1"><a href="#proc" class="nav-link">proc</a>
-              <ul class="nav flex-column">
-              </ul>
-            </li>
-            
-            <li class="nav-item" data-level="1"><a href="#dotklarenz" class="nav-link">dotklarenz</a>
-              <ul class="nav flex-column">
-              </ul>
-            </li>
-            
-            <li class="nav-item" data-level="1"><a href="#metadata-examples" class="nav-link">Metadata examples</a>
-              <ul class="nav flex-column">
-            <li class="nav-item" data-level="2"><a href="#legato-examples" class="nav-link">Legato Examples</a>
+            <li class="nav-item" data-level="2"><a href="#legato" class="nav-link">Legato</a>
               <ul class="nav flex-column">
               </ul>
             </li>
@@ -107,11 +102,9 @@
 </div></div>
                     <div class="col-md-9" role="main">
 
-<p>Klarenz's interface consists of a class <a href="#Part"><strong>Part</strong></a> and a main processing function <a href="#proc">proc</a>. A configuration file <a href="#dotklarenz"><strong>.klarenz</strong></a> can be used to set some system variables.</p>
-<hr />
-<h1 id="part">Part</h1>
-<p>Signature: <code>(events, metadata={})</code></p>
-<p>A Part object can be thought of as a single instrument.</p>
+<h1 id="class-part">Class Part</h1>
+<p>A Part object can be thought of as a single instrument and has the following signature:</p>
+<p><code>Part(events, metadata={})</code></p>
 <ul>
 <li>
 <p><strong>events</strong>: a dictionary which accepts following keys:</p>
@@ -187,13 +180,17 @@
 <li><strong>value</strong>: a string which can be any of the <a href="http://lilypond.org/doc/v2.19/Documentation/notation/expressive-marks-attached-to-notes#dynamics">Lilypond dynamics</a> or a new <em>absolute</em> dynamic definition with the following syntax: <code>"dynamic_name =&gt; args"</code>, where <code>dynamic_name</code> is the name of the variable used as the new dynamic and <code>args</code> are any white-space-seperated combination of ascii characters and the new dynamic (an arbitrary combination of the following characters: <code>f, m, p, r, s, z</code>) prefixed by an identifier <code>D</code>. Once a new dynamic has been defined, it can be used subsequently just as built-in dynamics. (<a href="#dynamic_example"><strong>dynamic examples</strong></a>)</li>
 </ul>
 </li>
-<li>
-<p><code>"legato"</code>: a dictionary which accepts following key/value pairs:</p>
-<ul>
-<li><strong>key</strong>: one of the strings: <code>"solid"</code>, <code>"halfsolid"</code>, <code>"dashed"</code>, <code>"halfdashed"</code> or <code>"dotted"</code>.</li>
-<li><strong>value</strong>: a list or a tuple of a two element tuple of integers or floats specifying the start and the end beats of the legato (exclusive of the ending beat). If no notes exist on the specified starting beat, a rest is created to accommodate the legato. Please note that Lilypond allows a maximum of two overlapping legatos. From the <a href="http://lilypond.org/doc/v2.18/Documentation/notation/expressive-marks-as-curves">documentation page</a>: <em>Simultaneous or overlapping slurs are not permitted, but a phrasing slur can overlap a slur. This permits two slurs to be printed at once.</em> <a href="http://lilypond.org/doc/v2.18/Documentation/notation/expressive-marks-as-curves#phrasing-slurs">Also</a>: <em>Simultaneous or overlapping phrasing slurs are not permitted</em>. The legato metadata <em>values</em> will be processed according to these aspects. For some examples see the <a href="#legato_example"><strong>Legato Examples</strong></a> page.</li>
 </ul>
 </li>
+</ul>
+<h2 id="legato">Legato</h2>
+<p>The <code>"legato"</code> metadata is a dictionary which accepts following key/value pairs:</p>
+<ul>
+<li><strong>key</strong>: must be one of the strings: <code>"solid"</code>, <code>"halfsolid"</code>, <code>"dashed"</code>, <code>"halfdashed"</code> or <code>"dotted"</code>.</li>
+<li>
+<p><strong>value</strong>: a list or a tuple of a two element tuple of integers or floats specifying the start and the end beats of the legato (exclusive of the ending beat). If no notes exist on the specified starting beat, a rest is created to accommodate the legato. Please note that Lilypond allows a maximum of two overlapping legatos. From the <a href="http://lilypond.org/doc/v2.18/Documentation/notation/expressive-marks-as-curves">documentation page</a>: <em>Simultaneous or overlapping slurs are not permitted, but a phrasing slur can overlap a slur. This permits two slurs to be printed at once.</em> <a href="http://lilypond.org/doc/v2.18/Documentation/notation/expressive-marks-as-curves#phrasing-slurs">Also</a>: <em>Simultaneous or overlapping phrasing slurs are not permitted</em>. The legato metadata <em>values</em> will be processed according to these aspects. 
+For some examples see the <a href="#legato_example"><strong>Legato Examples</strong></a> page.</p>
+<ul>
 <li>
 <p><code>"tie"</code>: a dictionary which accepts following key/value pairs:</p>
 <ul>
@@ -217,248 +214,7 @@ Except with <a href="http://lilypond.org/doc/v2.18/Documentation/notation/list-o
 </li>
 </ul>
 </li>
-</ul>
-<hr />
-<h1 id="proc">proc</h1>
-<p>Signature: <code>(score, metadata={}, file_name="klarenz", path="/tmp", dot_klarenz="~/.klarenz", outputs=["pdf"], view=True)</code></p>
-<p>The main processing function with following parameters:</p>
-<ul>
-<li><strong>score</strong>: can be a Part instance or a list/tuple of Part instances.</li>
-<li><strong>metadata</strong>: global metadata which will be applied to all Part instances in the <em>score</em> parameter. Part's <em>metadata</em> will overwrite this parameter.</li>
-<li><strong>file_name</strong>: will be used as the name for all output files.</li>
-<li><strong>path</strong>: where to save the output files.</li>
-<li><strong>dot_klarenz</strong>: the path to the <a href="#.klarenz">.klarenz</a> file.</li>
-<li><strong>outputs</strong>: a collection of output format strings. Can be any of: <code>"pdf"</code> (default), <code>"svg"</code>, <code>"jpg"</code>, <code>"midi"</code>, <code>"mid"</code>.</li>
-<li><strong>view</strong>: whether to show the PDF file using the pdf viewer specified in the <a href="#.klarenz">.klarenz</a> file after compilation or not. Defaults to <code>True</code>.</li>
-</ul>
-<hr />
-<h1 id="dotklarenz">dotklarenz</h1>
-<p>The content of this configuration file will be used for setting some klarenz and system variables. The path to this file defaults to <code>/home/user/.klarenz</code> and can be reset in the <code>dot_klarenz</code> parameter of the <a href="#klarenz">klarenz</a> function.<br>
-The syntax is <code>key = value</code>. Lines starting with a pound sign (<code>#</code>) are comments.<br>
-As of this writing (23. Aug. 2018) following keys can be set:</p>
-<ul>
-<li><strong>ly_version</strong>: Lilypond version. Defaults to <code>2.21.0</code>.</li>
-<li><strong>ly_language</strong>: Lilypond language. Defaults to <code>deutsch</code>.</li>
-<li><strong>pdf_viewer</strong>: path to the PDF-viewer binary. Defaults to <code>/usr/bin/zathura</code>.</li>
-<li><strong>ly_bin</strong>: path to the Lilypond binary. Defaults to <code>/usr/local/bin/lilypond</code>.</li>
-<li><strong>ly_paper_size</strong>: paper format used by Lilypond. Defaults to <code>quarto</code>. <a href="http://lilypond.org/doc/v2.19/Documentation/notation/predefined-paper-sizes.en.html">More formats</a></li>
-<li><strong>ly_staff_size</strong>: staff size used by Lilypond. Defaults to <code>14</code>.</li>
-<li><strong>load_ekmelily</strong>: whether the <em>ekmelily</em> system should be loaded for microtonal notation (<code>yes</code>) or not (<code>no</code>). Defaults to <code>yes</code>.</li>
-</ul>
-<hr />
-<h1 id="metadata-examples">Metadata examples</h1>
-<p><em><code>from klarenz import *</code> applies to all of the code snippets and will be omitted in the following.</em></p>
-<h4 id="timesig_example">timesig:</h4>
-
-<p>The following metadata:</p>
-<pre><code>
-klarenz(Part(events={"notes": range(60, 84),
-                   "beats": range(24)},
-           metadata={"timesig": {
-               (1, 12): (3, 8),
-               (4, 7): [2, 32],
-               17: (5, 4),
-               (19, 20): (1, 8)
-           }}))
-</code></pre>
-
-<p>will be processed in the following way:</p>
-<ol>
-<li>beat 0 (<strong>4/4</strong>, default time signature) to beat 1 results in a <strong>1/4</strong></li>
-<li>beat 1  (<strong>3/8</strong>) to beat 4 results in a <strong>3/8</strong></li>
-<li>beat 4 (<strong>2/32</strong>) to beat 7 results in one <strong>2/32</strong> and a remainder of <strong>1/32</strong></li>
-<li>beat 7 resets to <strong>3/8</strong> till beat 12, resulting in one <strong>3/8</strong> and a remainder of <strong>2/8</strong></li>
-<li>beat 12 resets to <strong>4/4</strong> (default time signature) till beat 17, resulting in one <strong>4/4</strong> and a remainder of <strong>1/4</strong></li>
-<li>from beat 17 on <strong>5/4</strong></li>
-</ol>
-<p>and produce:</p>
-<p><img alt="timesig_out" src="../jpg/timesig_out.jpg" title="timesig out" /></p>
-<hr />
-<h4 id="clef_example">clef:</h4>
-
-<pre><code>
-klarenz(Part(events={"notes": range(60, 84),
-                   "beats": range(24)},
-           metadata={"clef": {
-               (0.5, 8+1/3): "alto",
-               (4, 6): "tenor",
-               8+2/3: "treble+9",
-               13.5: "treble-8",
-               16: "soprano"
-           }}))
-</code></pre>
-
-<p><img alt="clef_out" src="../jpg/clef_out.jpg" title="clef out" /></p>
-<hr />
-<h4 id="notehead_example">notehead:</h4>
-
-<p>The following metadata:</p>
-<pre><code>
-klarenz(Part(events={"notes": range(60, 84),
-                   "beats": range(24)},
-           metadata={"notehead": {
-               (.5, 8+1/3): "mensural",
-               (4, 6): "harmonic",
-               8+2/3: "cross",
-               13.5: "triangle",
-               16: "xcircle"
-           }}))
-</code></pre>
-
-<p>will be processed in the following way:</p>
-<ol>
-<li>nearest existing note to the beat 0.5 is on beat 0 (0.5 will be rounded downwards), from beat 0 to beat 4 are <code>"mensural"</code></li>
-<li>from beat 4 to 6 are <code>"harmonic"</code></li>
-<li>nearest existing note to the beat 8.333333333333334 is on beat 8, from beat 6 to beat 8 are set back to <code>"mensural"</code></li>
-<li>nearest existing note to the beat 8.666666666666666 is on beat 9, beat 8 to beat 9 is set back to <code>"default"</code></li>
-<li>nearest existing note to the beat 13.5 is on beat 13 (again 0.5 will be rounded downwards), from beat 9 to beat 13 are <code>"cross"</code></li>
-<li>from beat 13 to beat 16 are <code>"triangle"</code></li>
-<li>from beat 16 onwards are <code>"xcircle"</code></li>
-</ol>
-<p>and produce:</p>
-<p><img alt="notehead_out" src="../jpg/notehead_out.jpg" title="notehead out" /></p>
-<hr />
-<h4 id="barline_example">barline:</h4>
-
-<pre><code>
-def merge_dicts(d1, *ds):
-    """merge two or more dictionaries"""
-    for d in ds:
-        d1.update(d)
-    return d1
-
-klarenz(Part(events={"notes": range(60, 84),
-                   "beats": range(24)},
-           metadata={"barline": merge_dicts(
-               # make the default barlines invisible
-               {beat: "" for beat in range(3, 24, 4)},
-               # set new barlines after each third beat
-               {beat: "!" for beat in range(2, 24, 3)},
-               # and a closing barline at the end
-               {23: "|."}
-           )}))
-</code></pre>
-
-<p><img alt="barline_out" src="../jpg/barline_out.jpg" title="barline out" /></p>
-<pre><code>
-klarenz(Part({"notes":[range(48, 84)] * 3,
-            "beats": [range(36)] * 3},
-           {"staff": {"n": 3, "bind": "grand"},
-            "barline": {
-                # define new barlines and use them
-                0: {n * 4 - 1: "= => = _ _" for n in range(1, 10)},
-                1: {n * 4 - 1: "] => ] _ _" for n in range(1, 10)},
-                2: {n * 4 - 1: "[ => [ _ _" for n in range(1, 10)}
-            }}))
-</code></pre>
-
-<p><img alt="barline_define_out" src="../jpg/barline_define_out.jpg" title="barline_define out" /></p>
-<hr />
-<h4 id="dynamic_example">dynamic:</h4>
-
-<pre><code>
-klarenz(Part({"notes": range(60, 72),
-            "beats": [n * .5 for n in range(12)]},
-           {"dynamic": {(0, 5.5): "<"}}))
-</code></pre>
-
-<p><img alt="dynamic_out_1" src="../jpg/dynamic_out_1.jpg" title="dynamic out" /></p>
-<pre><code>
-def merge_dicts(d1, d2):
-    """merge two dictionaries"""
-    d1.update(d2)
-    return d1
-
-klarenz(Part(events={"notes": [range(60, 72), range(72, 60, -1)] * 5,
-                   "beats": [range(12)] * 10},
-           metadata={"staff": {"n": 10, "bind": "grand"},
-                     "dynamic": merge_dicts(
-                         {v: {3: "p", 7: "sf", (0, 11): ">"}
-                          for v in range(0, 10, 2)},
-                         {v: {2: "sf", (0, 11): "<"}
-                          for v in range(1, 10, 2)})
-           }))
-</code></pre>
-
-<p><img alt="dynamic_out_2" src="../jpg/dynamic_out_2.jpg" title="dynamic out" /></p>
-<pre><code>
-klarenz(Part({"notes": range(60, 72),
-            "beats": range(12)},
-           {"dynamic": {(0, 11): "<",
-                        (4, 8): ">",
-                        6: "ppp"}}))
-</code></pre>
-
-<p><img alt="dynamic_out_3" src="../jpg/dynamic_out_3.jpg" title="dynamic out" /></p>
-<pre><code>
-def merge_dicts(d1, *ds):
-    """merge two or more dictionaries"""
-    for d in ds:
-        d1.update(d)
-    return d1
-
-klarenz(Part(events={"notes": range(60, 72),
-                   "beats": range(12)},
-           metadata={"dynamic": merge_dicts(
-               # define some new absolute dynamics
-               {0: "starf => * Drfz *"},
-               {1: "roundp => ( Dp )"},
-               # now they can be accessed just as any other dynamics
-               {beat: "starf" for beat in range(2, 12, 2)},
-               {beat: "roundp" for beat in range(3, 12, 2)}
-           )}))
-</code></pre>
-
-<p><img alt="dynamic_out_4" src="../jpg/dynamic_out_4.jpg" title="dynamic out" /></p>
-<pre><code>
-klarenz(Part(events={"notes": range(60, 84),
-                   "beats": range(24)},
-           metadata={"dynamic": {
-               (0, 6): "<",
-               (2, 5.1): ">",
-               5.5: "sf",
-               4: "mp",
-               (6.5, 23): "dim",
-               (10+2/3, 15.5): "cr",
-               13+3/7: "p",
-               23: "rfz"
-           }}))
-</code></pre>
-
-<p><img alt="dynamic_out" src="../jpg/dynamic_out.jpg" title="dynamic out" /></p>
-<hr />
-<h2 id="legato-examples">Legato Examples</h2>
-<h3 id="legato_example">legato:</h3>
-<pre><code>
-klarenz(Part(events={"notes": range(60, 84),
-                   "beats": range(24)},
-           metadata={"legato": {
-               "solid": ((1, 15.5),
-                         (3+1/3, 5),
-                         (5, 7)),
-               "halfdashed": [(7, 12.5),
-                              (12.5, 17)],
-               "dotted": ((8, 9),
-                          (16, 23))
-           }}))
-</code></pre>
-<p><img alt="legato_out" src="../jpg/legato_out.jpg" title="legato out" /></p>
-<hr />
-<h4 id="articulation_example">articulation:</h4>
-
-<pre><code>
-klarenz(Part(events={"notes": range(60, 72),
-                   "beats": range(12)},
-           metadata={"articulation": {
-            3: (">", "."),
-        (1, 7): "staccatissimo",
-        (4, 6): ["prall", "^", "trill", "turn"],
-        10.5: ("fermata", "trill"),
-        11: "<>"
-       }}))
-</code></pre>
-
-<p><img alt="articulation_out" src="../jpg/articulation_out.jpg" title="articulation out" /></p></div>
+</ul></div>
             </div>
         </div>
 

@@ -8,7 +8,7 @@
         
         
         <link rel="shortcut icon" href="../img/favicon.ico">
-        <title>Contact - Klarenz</title>
+        <title>Metadata Examples - Klarenz</title>
         <link href="../css/bootstrap.min.css" rel="stylesheet">
         <link href="../css/font-awesome.min.css" rel="stylesheet">
         <link href="../css/base.css" rel="stylesheet">
@@ -33,7 +33,7 @@
                             <li class="navitem">
                                 <a href=".." class="nav-link">About</a>
                             </li>
-                            <li class="dropdown">
+                            <li class="dropdown active">
                                 <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">Documentation <b class="caret"></b></a>
                                 <ul class="dropdown-menu">
                                     
@@ -42,7 +42,7 @@
 </li>
                                     
 <li>
-    <a href="../md-examples/" class="dropdown-item">Metadata Examples</a>
+    <a href="./" class="dropdown-item active">Metadata Examples</a>
 </li>
                                     
 <li>
@@ -50,8 +50,8 @@
 </li>
                                 </ul>
                             </li>
-                            <li class="navitem active">
-                                <a href="./" class="nav-link">Contact</a>
+                            <li class="navitem">
+                                <a href="../contact/" class="nav-link">Contact</a>
                             </li>
                         </ul>
 
@@ -62,12 +62,12 @@
                             </a>
                         </li>
                             <li class="nav-item">
-                                <a rel="prev" href="../proc/" class="nav-link">
+                                <a rel="prev" href="../part/" class="nav-link">
                                     <i class="fa fa-arrow-left"></i> Previous
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a rel="next" class="nav-link disabled">
+                                <a rel="next" href="../proc/" class="nav-link">
                                     Next <i class="fa fa-arrow-right"></i>
                                 </a>
                             </li>
@@ -89,8 +89,12 @@
     <div id="toc-collapse" class="navbar-collapse collapse card bg-secondary">
         <ul class="nav flex-column">
             
-            <li class="nav-item" data-level="1"><a href="#contact" class="nav-link">Contact</a>
+            <li class="nav-item" data-level="1"><a href="#metadata-examples" class="nav-link">Metadata Examples</a>
               <ul class="nav flex-column">
+            <li class="nav-item" data-level="2"><a href="#tie" class="nav-link">Tie</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
               </ul>
             </li>
         </ul>
@@ -98,11 +102,24 @@
 </div></div>
                     <div class="col-md-9" role="main">
 
-<h1 id="contact">Contact</h1>
-<p><a href="https://github.com/teymuri/klarenz.git">Source Github Repo</a></p>
-<p><a href="https://github.com/teymuri/klarenz-docs.git">Documentation Github Repo</a></p>
-<p>Author: Amir Teymuri</p>
-<p>Email: amiratwork22[at]gmail[dot]com</p></div>
+<h1 id="metadata-examples">Metadata Examples</h1>
+<h2 id="tie">Tie</h2>
+<pre><code class="language-python">proc(
+    Part(
+        events={
+            &quot;pchs&quot;: [60, 60, 60, 67, 67, 67, 72, 72],
+            &quot;onsets&quot;: range(8)
+        },
+        metadata={
+            &quot;tie&quot;: {
+                &quot;solid&quot;: ((0, 2), (6, 7),),
+                &quot;dashed&quot;: ((3,5),)
+            }
+        }
+    )
+)
+</code></pre>
+<p><img alt="tie example" src="../jpg/tie0.jpg" /></p></div>
             </div>
         </div>
 
