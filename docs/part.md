@@ -4,18 +4,74 @@ A Part object can be thought of as a single instrument and has the following sig
 
 ```Part(events, metadata={})```
 
+## `events`
+is a dictionary which accepts following keys:
 
-*  __events__: a dictionary which accepts following keys:
-     *  ```"notes"```: a collection (monophon Part) or a collection of collections (polyphon Part) of either MIDI key numbers or Lilypond note names (as strings, including Lilypond rests `"r"` and spacer rests `"s"`, more on [notes](http://lilypond.org/doc/v2.18/Documentation/notation/writing-pitches) and [rests](http://lilypond.org/doc/v2.19/Documentation/notation/writing-rests.en.html)) or a sorted collection (`list` or `tuple`) of them as chords. Please note that MIDI key numbers below or beyond the MIDI range (0, 127) can also be notated (if no _midi_ output needed).
-  Microtonal notes smaller than quarter tones are supported according to the specifications of [__Ekmelily__](http://www.ekmelic-music.org/en/extra/ekmelily.htm). Please note that ekmelily is loaded into the _ly_ file by default. It is possible to prevent it from being loaded by setting the `load_ekmelily` key to `no` in the [.klarenz](#.klarenz) configuration file.
+-  `"pchs"`: a collection (monophonic Part) or a collection of collections (polyphon Part) of either MIDI key numbers or Lilypond note names (as strings, including Lilypond rests `"r"` and spacer rests `"s"`, more on [notes](http://lilypond.org/doc/v2.18/Documentation/notation/writing-pitches) and [rests](http://lilypond.org/doc/v2.19/Documentation/notation/writing-rests.en.html)) or a sorted collection (`list` or `tuple`) of them as chords. Note that MIDI key numbers below or beyond the MIDI range (0, 127) can also be notated (if no _midi_ output needed).
+  Microtonal notes smaller than quarter tones are supported according to the specifications of [__Ekmelily__](http://www.ekmelic-music.org/en/extra/ekmelily.htm). Please note that Ekmelily is loaded into the output Lilypond file by default. You can prevent Ekmelily from being loaded by setting the `load_ekmelily` to `no` in the [.klarenz](#.klarenz) configuration file.
   
-     * ```"beats"```: a collection (monophon Part) or a collection of collections (polyphon Part) of integers or floats.
+- `"onsets"`: a collection (for a monophonic Part) or a collection of collections (for a polyphonic Part) of integers or floats
+  specifying the onset times for each note specified in `"pchs"`. Onset times can be 0 or any non-negative real number. Note that if the first onset is non-zero, starting rests are inserted automatically.
 
-     * ```"durations"```: a dictionary with keys being beats getting the new durations and values being the durations.
+- `"durations"`: an optional dictionary with keys representing onsets (must be defined in the `"onsets"` above) and values representing their durations.
 
-* __metadata__: a dictionary which accepts zero (default) or more of the following keys. If Part is polyphon, a specific metadata can be assigned to a single voice by wrapping that metadata's dictionary inside an outer dictionary with _keys_ of type integer representing the voice number (starting from 0) and _values_ being the metadata dictionary. If Part is polyphon and no voice assignment takes place, the metadata dictionary will be applied to all voices likewise.
+### Some `"event"` Examples
+```python
+from klarenz import *
+```
 
-    *  `"who"` : a string. This should be a unique id and will be used in the _ly_ file as the variable name holding the processed Part instance. If `"who"` is not specified, klarenz will generate a random id. 
+```python
+proc(Part(events={"pchs": range(60, 72), "onsets": range(12)}))
+```
+![event example 0](./jpg/event-example-0.jpg)
+
+```python
+# Build a major chord on each half step
+proc(Part(events={"pchs": [[i, i+4, i+7, i+12] for i in range(60, 72)], "onsets": range(12)}))
+```
+![event example 1](./jpg/event-example-1.jpg)
+
+```python
+# Onsets could start from a value higher than zero,
+# here starting at 2 + 2/3 (two triplets after the third quarter)
+import numpy as np
+
+proc(Part(events={"pchs": range(60, 72), "onsets": np.arange(2 + 2/3, 14 + 2/3)}))
+```
+![event example 2](./jpg/event-example-2.jpg)
+
+```python
+# Durations are not enforced by default
+onsets = np.arange(0.75, 12.75)
+proc(
+    Part(
+        events={
+            "pchs": range(60, 72),
+            "onsets": onsets
+        }
+    )
+)
+```
+![event example 3](./jpg/event-example-3.jpg)
+
+```python
+# We can define a dictionary of onset:duration pairs to 
+# specify the duration for each onset
+proc(
+    Part(
+        events={
+            "pchs": range(60, 72),
+            "onsets": onsets,
+            "durations": {o: 1 for o in onsets}
+        }
+    )
+)
+```
+![event example 4](./jpg/event-example-4.jpg)
+## `metadata`
+is a dictionary which accepts zero (default) or more of the following keys. If Part is polyphon, a specific metadata can be assigned to a single voice by wrapping that metadata's dictionary inside an outer dictionary with _keys_ of type integer representing the voice number (starting from 0) and _values_ being the metadata dictionary. If Part is polyphon and no voice assignment takes place, the metadata dictionary will be applied to all voices likewise.
+
+- `"who"` a string. This should be a unique id and will be used in the _ly_ file as the variable name holding the processed Part instance. If `"who"` is not specified, klarenz will generate a random id. 
 
     *  `"what"`: a dictionary which accepts the following two keys:
           *  `"name"`: value should be a string used as the instrument name.
@@ -56,7 +112,7 @@ A Part object can be thought of as a single instrument and has the following sig
         *  __value__: a string which can be any of the [Lilypond dynamics](http://lilypond.org/doc/v2.19/Documentation/notation/expressive-marks-attached-to-notes#dynamics) or a new _absolute_ dynamic definition with the following syntax: `"dynamic_name => args"`, where `dynamic_name` is the name of the variable used as the new dynamic and `args` are any white-space-seperated combination of ascii characters and the new dynamic (an arbitrary combination of the following characters: `f, m, p, r, s, z`) prefixed by an identifier `D`. Once a new dynamic has been defined, it can be used subsequently just as built-in dynamics. ([__dynamic examples__](#dynamic_example))
 
 
-## Legato
+### Legato
 The `"legato"` metadata is a dictionary which accepts following key/value pairs:
 
 -  __key__: must be one of the strings: `"solid"`, `"halfsolid"`, `"dashed"`, `"halfdashed"` or `"dotted"`.
