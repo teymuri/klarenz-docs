@@ -91,7 +91,11 @@
             
             <li class="nav-item" data-level="1"><a href="#class-part" class="nav-link">Class Part</a>
               <ul class="nav flex-column">
-            <li class="nav-item" data-level="2"><a href="#legato" class="nav-link">Legato</a>
+            <li class="nav-item" data-level="2"><a href="#events" class="nav-link">events</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="2"><a href="#metadata" class="nav-link">metadata</a>
               <ul class="nav flex-column">
               </ul>
             </li>
@@ -105,28 +109,69 @@
 <h1 id="class-part">Class Part</h1>
 <p>A Part object can be thought of as a single instrument and has the following signature:</p>
 <p><code>Part(events, metadata={})</code></p>
+<h2 id="events"><code>events</code></h2>
+<p>is a dictionary which accepts following keys:</p>
 <ul>
 <li>
-<p><strong>events</strong>: a dictionary which accepts following keys:</p>
-<ul>
-<li>
-<p><code>"notes"</code>: a collection (monophon Part) or a collection of collections (polyphon Part) of either MIDI key numbers or Lilypond note names (as strings, including Lilypond rests <code>"r"</code> and spacer rests <code>"s"</code>, more on <a href="http://lilypond.org/doc/v2.18/Documentation/notation/writing-pitches">notes</a> and <a href="http://lilypond.org/doc/v2.19/Documentation/notation/writing-rests.en.html">rests</a>) or a sorted collection (<code>list</code> or <code>tuple</code>) of them as chords. Please note that MIDI key numbers below or beyond the MIDI range (0, 127) can also be notated (if no <em>midi</em> output needed).
-  Microtonal notes smaller than quarter tones are supported according to the specifications of <a href="http://www.ekmelic-music.org/en/extra/ekmelily.htm"><strong>Ekmelily</strong></a>. Please note that ekmelily is loaded into the <em>ly</em> file by default. It is possible to prevent it from being loaded by setting the <code>load_ekmelily</code> key to <code>no</code> in the <a href="#.klarenz">.klarenz</a> configuration file.</p>
+<p><code>"pchs"</code>: a collection (monophonic Part) or a collection of collections (polyphon Part) of either MIDI key numbers or Lilypond note names (as strings, including Lilypond rests <code>"r"</code> and spacer rests <code>"s"</code>, more on <a href="http://lilypond.org/doc/v2.18/Documentation/notation/writing-pitches">notes</a> and <a href="http://lilypond.org/doc/v2.19/Documentation/notation/writing-rests.en.html">rests</a>) or a sorted collection (<code>list</code> or <code>tuple</code>) of them as chords. Note that MIDI key numbers below or beyond the MIDI range (0, 127) can also be notated (if no <em>midi</em> output needed).
+  Microtonal notes smaller than quarter tones are supported according to the specifications of <a href="http://www.ekmelic-music.org/en/extra/ekmelily.htm"><strong>Ekmelily</strong></a>. Please note that Ekmelily is loaded into the output Lilypond file by default. You can prevent Ekmelily from being loaded by setting the <code>load_ekmelily</code> to <code>no</code> in the <a href="#.klarenz">.klarenz</a> configuration file.</p>
 </li>
 <li>
-<p><code>"beats"</code>: a collection (monophon Part) or a collection of collections (polyphon Part) of integers or floats.</p>
+<p><code>"onsets"</code>: a collection (for a monophonic Part) or a collection of collections (for a polyphonic Part) of integers or floats
+  specifying the onset times for each note specified in <code>"pchs"</code>. Onset times can be 0 or any non-negative real number. Note that if the first onset is non-zero, starting rests are inserted automatically.</p>
 </li>
 <li>
-<p><code>"durations"</code>: a dictionary with keys being beats getting the new durations and values being the durations.</p>
+<p><code>"durations"</code>: an optional dictionary with keys representing onsets (must be defined in the <code>"onsets"</code> above) and values representing their durations.</p>
 </li>
 </ul>
-</li>
-<li>
-<p><strong>metadata</strong>: a dictionary which accepts zero (default) or more of the following keys. If Part is polyphon, a specific metadata can be assigned to a single voice by wrapping that metadata's dictionary inside an outer dictionary with <em>keys</em> of type integer representing the voice number (starting from 0) and <em>values</em> being the metadata dictionary. If Part is polyphon and no voice assignment takes place, the metadata dictionary will be applied to all voices likewise.</p>
+<h3 id="some-event-examples">Some <code>"event"</code> Examples</h3>
+<pre><code class="language-python">from klarenz import *
+</code></pre>
+<pre><code class="language-python">proc(Part(events={&quot;pchs&quot;: range(60, 72), &quot;onsets&quot;: range(12)}))
+</code></pre>
+<p><img alt="event example 0" src="../jpg/event-example-0.jpg" /></p>
+<pre><code class="language-python"># Build a major chord on each half step
+proc(Part(events={&quot;pchs&quot;: [[i, i+4, i+7, i+12] for i in range(60, 72)], &quot;onsets&quot;: range(12)}))
+</code></pre>
+<p><img alt="event example 1" src="../jpg/event-example-1.jpg" /></p>
+<pre><code class="language-python"># Onsets could start from a value higher than zero,
+# here starting at 2 + 2/3 (two triplets after the third quarter)
+import numpy as np
+
+proc(Part(events={&quot;pchs&quot;: range(60, 72), &quot;onsets&quot;: np.arange(2 + 2/3, 14 + 2/3)}))
+</code></pre>
+<p><img alt="event example 2" src="../jpg/event-example-2.jpg" /></p>
+<pre><code class="language-python"># Durations are not enforced by default
+onsets = np.arange(0.75, 12.75)
+proc(
+    Part(
+        events={
+            &quot;pchs&quot;: range(60, 72),
+            &quot;onsets&quot;: onsets
+        }
+    )
+)
+</code></pre>
+<p><img alt="event example 3" src="../jpg/event-example-3.jpg" /></p>
+<pre><code class="language-python"># We can define a dictionary of onset:duration pairs to 
+# specify the duration for each onset
+proc(
+    Part(
+        events={
+            &quot;pchs&quot;: range(60, 72),
+            &quot;onsets&quot;: onsets,
+            &quot;durations&quot;: {o: 1 for o in onsets}
+        }
+    )
+)
+</code></pre>
+<p><img alt="event example 4" src="../jpg/event-example-4.jpg" /></p>
+<h2 id="metadata"><code>metadata</code></h2>
+<p>is a dictionary which accepts zero (default) or more of the following keys. If Part is polyphon, a specific metadata can be assigned to a single voice by wrapping that metadata's dictionary inside an outer dictionary with <em>keys</em> of type integer representing the voice number (starting from 0) and <em>values</em> being the metadata dictionary. If Part is polyphon and no voice assignment takes place, the metadata dictionary will be applied to all voices likewise.</p>
 <ul>
 <li>
-<p><code>"who"</code> : a string. This should be a unique id and will be used in the <em>ly</em> file as the variable name holding the processed Part instance. If <code>"who"</code> is not specified, klarenz will generate a random id. </p>
-</li>
+<p><code>"who"</code> a string. This should be a unique id and will be used in the <em>ly</em> file as the variable name holding the processed Part instance. If <code>"who"</code> is not specified, klarenz will generate a random id. </p>
+<ul>
 <li>
 <p><code>"what"</code>: a dictionary which accepts the following two keys:</p>
 <ul>
@@ -183,7 +228,7 @@
 </ul>
 </li>
 </ul>
-<h2 id="legato">Legato</h2>
+<h3 id="legato">Legato</h3>
 <p>The <code>"legato"</code> metadata is a dictionary which accepts following key/value pairs:</p>
 <ul>
 <li><strong>key</strong>: must be one of the strings: <code>"solid"</code>, <code>"halfsolid"</code>, <code>"dashed"</code>, <code>"halfdashed"</code> or <code>"dotted"</code>.</li>
