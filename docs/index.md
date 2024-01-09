@@ -25,7 +25,7 @@ Klarenz is on [Pypi](https://pypi.org/project/klarenz/), so simply use pip to in
 ```
 ~$ python -m pip install klarenz
 ~$ python -c "import klarenz; print(klarenz.version)"
-0.0.7
+1.2.2
 ```
 
 # First Example
@@ -34,7 +34,9 @@ Start Python, import Klarenz and print some notes:
 
 ```
 from klarenz import *
-proc(Part({"pchs": range(60, 72), "onsets": range(12)}))
+```
+```
+proc(Part({"notes": range(60, 72), "beats": range(12)}))
 ```
 ![Quick Test Klarenz Music Notation](jpg/readme-example.jpg)
 
@@ -42,8 +44,8 @@ If you want to use two instruments instead of just one, simply pass a list of pa
 ```
 proc(
     [
-        Part({"pchs": range(72, 84), "onsets": range(12)}),
-        Part({"pchs": range(67, 79), "onsets": range(12)})
+        Part({"notes": range(72, 84), "beats": range(12)}),
+        Part({"notes": range(67, 79), "beats": range(12)})
     ]
 )
 ```
@@ -53,8 +55,8 @@ To have more than one voice in each part, pack multiple pitch and onset collecti
 ```
 proc(
     [
-        Part({"pchs": [range(72, 84), range(65, 77)], "onsets": [range(12)] * 2}),
-        Part({"pchs": [range(60, 72), range(67, 79)], "onsets": [range(12)] * 2})
+        Part({"notes": [range(72, 84), range(65, 77)], "beats": [range(12)] * 2}),
+        Part({"notes": [range(60, 72), range(67, 79)], "beats": [range(12)] * 2})
     ]
 )
 ```
