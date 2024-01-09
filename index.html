@@ -123,19 +123,20 @@ GNU LilyPond 2.22.2
 <p>Klarenz is on <a href="https://pypi.org/project/klarenz/">Pypi</a>, so simply use pip to install it:</p>
 <pre><code>~$ python -m pip install klarenz
 ~$ python -c &quot;import klarenz; print(klarenz.version)&quot;
-0.0.7
+1.2.2
 </code></pre>
 <h1 id="first-example">First Example</h1>
 <p>Start Python, import Klarenz and print some notes:</p>
 <pre><code>from klarenz import *
-proc(Part({&quot;pchs&quot;: range(60, 72), &quot;onsets&quot;: range(12)}))
+</code></pre>
+<pre><code>proc(Part({&quot;notes&quot;: range(60, 72), &quot;beats&quot;: range(12)}))
 </code></pre>
 <p><img alt="Quick Test Klarenz Music Notation" src="jpg/readme-example.jpg" /></p>
 <p>If you want to use two instruments instead of just one, simply pass a list of parts to the processor function proc, rather than just one part:</p>
 <pre><code>proc(
     [
-        Part({&quot;pchs&quot;: range(72, 84), &quot;onsets&quot;: range(12)}),
-        Part({&quot;pchs&quot;: range(67, 79), &quot;onsets&quot;: range(12)})
+        Part({&quot;notes&quot;: range(72, 84), &quot;beats&quot;: range(12)}),
+        Part({&quot;notes&quot;: range(67, 79), &quot;beats&quot;: range(12)})
     ]
 )
 </code></pre>
@@ -143,8 +144,8 @@ proc(Part({&quot;pchs&quot;: range(60, 72), &quot;onsets&quot;: range(12)}))
 <p>To have more than one voice in each part, pack multiple pitch and onset collections in a list:</p>
 <pre><code>proc(
     [
-        Part({&quot;pchs&quot;: [range(72, 84), range(65, 77)], &quot;onsets&quot;: [range(12)] * 2}),
-        Part({&quot;pchs&quot;: [range(60, 72), range(67, 79)], &quot;onsets&quot;: [range(12)] * 2})
+        Part({&quot;notes&quot;: [range(72, 84), range(65, 77)], &quot;beats&quot;: [range(12)] * 2}),
+        Part({&quot;notes&quot;: [range(60, 72), range(67, 79)], &quot;beats&quot;: [range(12)] * 2})
     ]
 )
 </code></pre>
@@ -236,5 +237,5 @@ See the <a href="http://www.gnu.org/licenses/">GNU General Public License</a> fo
 
 <!--
 MkDocs version : 1.5.3
-Build Date UTC : 2024-01-03 14:33:14.245662+00:00
+Build Date UTC : 2024-01-09 13:15:21.771891+00:00
 -->
